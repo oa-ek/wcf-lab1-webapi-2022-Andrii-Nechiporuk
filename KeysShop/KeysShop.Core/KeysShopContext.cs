@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace KeysShop.Core
 {
-    public class KeysShopContext
+    public class KeysShopContext : DbContext
     {
-        public KeysShopContext()
+        public KeysShopContext(DbContextOptions<KeysShopContext> options)
+            : base(options)
         {
         }
 

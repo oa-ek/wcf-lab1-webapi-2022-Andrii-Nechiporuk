@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace KeysShop.Core
 {
-    internal class CartItem
+    public class CartItem
     {
+        public int Quantity { get; set; }
+
+        public Key Key { get; set; }
     }
 }
