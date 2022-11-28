@@ -1,8 +1,16 @@
+using KeysShop.Core;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var connectionString = builder.Configuration.GetConnectionString("KeysShopConnection");
+
+builder.Services.AddDbContext<KeysShopContext>(options => options.UseSqlServer(connectionString));
+
+//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
