@@ -23,7 +23,8 @@ namespace KeysShop.Repository
 
         public void SetCartId(string id, string cartSessionKey)
         {
-            _session.SetString(cartSessionKey, id);
+            var idInBytes = ASCIIEncoding.ASCII.GetBytes(id);
+            _session.Set(cartSessionKey, idInBytes);
         }
 
         public string GetCartId(string cartSessionKey)
@@ -41,7 +42,8 @@ namespace KeysShop.Repository
                     SetCartId(tempCartId.ToString(), cartSessionKey);
                 }
             }
-            return _session.GetString(cartSessionKey);
+/*            var cartKey = _session.GetObject<string>(cartSessionKey);*/
+            return _session.GetObject<string>(cartSessionKey);
         }
         public List<CartItem> GetCartItems()
         {

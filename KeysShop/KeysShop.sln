@@ -4,14 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.32804.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeysShop.Server", "KeysShop\Server\KeysShop.Server.csproj", "{84847EB5-3244-4F88-A9B5-4111FBF6C688}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3A471D13-CB59-4975-AB46-9D7D8DF711DC} = {3A471D13-CB59-4975-AB46-9D7D8DF711DC}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeysShop.Client", "KeysShop\Client\KeysShop.Client.csproj", "{5046FD95-6DBB-4C54-8F88-780AF82FB747}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeysShop.Shared", "KeysShop\Shared\KeysShop.Shared.csproj", "{2C81599B-D7FE-4C9F-B8F2-28B56DC14718}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeysShop.Core", "KeysShop.Core\KeysShop.Core.csproj", "{391B29CF-D6E4-4DBC-A11B-4011F069C7C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeysShop.Core", "KeysShop.Core\KeysShop.Core.csproj", "{391B29CF-D6E4-4DBC-A11B-4011F069C7C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeysShop.Repository", "KeysShop.Repository\KeysShop.Repository.csproj", "{3A471D13-CB59-4975-AB46-9D7D8DF711DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeysShop.Repository", "KeysShop.Repository\KeysShop.Repository.csproj", "{3A471D13-CB59-4975-AB46-9D7D8DF711DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
