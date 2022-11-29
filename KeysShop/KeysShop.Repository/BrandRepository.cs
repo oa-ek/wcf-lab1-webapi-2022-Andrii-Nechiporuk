@@ -1,4 +1,5 @@
 ﻿using KeysShop.Core;
+using KeysShop.Repository.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,11 @@ namespace KeysShop.Repository
             this._ctx = _ctx;
         }
 
-        public async Task<Brand> AddBrandAsync(Brand brand)
+        public async Task<Brand> AddBrandAsync(BrandCreateDto brandDto)
         {
+            var brand = new Brand();
+            brand.Name = brandDto.Name;
+            brand.Description = brandDto.Description;
             _ctx.Brands.Add(brand);
             await _ctx.SaveChangesAsync();
             return _ctx.Brands.FirstOrDefault(x => x.Name == brand.Name);

@@ -32,8 +32,8 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-builder.Services.AddSwaggerGen();
-/*builder.Services.AddSwaggerGen(options =>
+//builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
@@ -41,7 +41,7 @@ builder.Services.AddSwaggerGen();
         Title = "Keys Shop API",
         Description = "API for educational purposes",
     });
-});*/
+});
 
 builder.Services.AddSession(options =>
 {
