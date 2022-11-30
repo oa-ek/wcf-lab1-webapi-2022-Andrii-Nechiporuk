@@ -16,6 +16,10 @@ namespace KeysShop.Server.Controllers
             this.ordersRepository = ordersRepository;
         }
 
+        /// <summary>
+        /// Method creates final order
+        /// </summary>
+        /// <param name="paymethod">method of payment which user have to choose</param>
         [HttpPost("createorder")]
         public void Checkout(OrderDto order, string paymethod)
         {

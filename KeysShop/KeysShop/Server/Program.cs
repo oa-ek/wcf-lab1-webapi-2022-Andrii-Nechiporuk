@@ -37,10 +37,13 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
-        Version = "v1",
+        Version = "v1.1",
         Title = "Keys Shop API",
         Description = "API for educational purposes",
     });
+    string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddSession(options =>

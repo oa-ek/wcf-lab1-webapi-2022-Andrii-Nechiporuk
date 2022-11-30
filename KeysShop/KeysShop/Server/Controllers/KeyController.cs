@@ -4,6 +4,7 @@ using KeysShop.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace KeysShop.UI.Controllers
 {
@@ -22,6 +23,10 @@ namespace KeysShop.UI.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        /// <summary>
+        /// Method returnes list of keys from database
+        /// </summary>
+        /// 
         [HttpGet("getkeys/")]
         public List<Key> GetKeys()
         {
@@ -29,13 +34,25 @@ namespace KeysShop.UI.Controllers
             return keys;
         }
 
+        /// <summary>
+        /// Method returnes key from database by id
+        /// </summary>
+        /// <param name="id">id of searching key</param>
+        /// <returns>key from db</returns>
         [HttpGet("getkey/{id}")]
         public Key GetBrand(int id)
         {
             return keysRepository.GetKey(id);
         }
 
+        /// <summary>
+        /// Method creates key and adds it to db
+        /// </summary>
+        /// <param name="brands">gives the name of brand, which we need to create key</param>
         [HttpPost("createkey/")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        [SwaggerResponse(StatusCodes.Status409Conflict)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError)]
         public async Task CreateKey(KeyCreateDto keyCreateDto, string brands)
         {
             var brand = brandsRepository.GetBrandByName(brands);
@@ -88,13 +105,24 @@ namespace KeysShop.UI.Controllers
                     return contentType;
                 }*/
 
+
+        /// <summary>
+        /// Method edits key from database
+        /// </summary>
+        /// <param name="brands">name of brand, which we wanna edit</param>
         [HttpPost("editkey/")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        [SwaggerResponse(StatusCodes.Status409Conflict)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError)]
         public async Task Edit(KeyCreateDto model, string brands)
         {
             await keysRepository.UpdateAsync(model, brands);
         }
 
-
+        /// <summary>
+        /// Method deletes key from database by id
+        /// </summary>
+        /// <param name="id">id of deleting key</param>
         [HttpPost("confirmdelete/{id}")]
         public async Task ConfirmDelete(int id)
         {

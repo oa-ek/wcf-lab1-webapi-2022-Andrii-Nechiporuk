@@ -15,6 +15,11 @@ namespace KeysShop.Server.Controllers
             this.keysRepository = keysRepository;
         }
 
+        /// <summary>
+        /// Method searches needed keys by search string in db and returns the list of them
+        /// </summary>
+        /// <param name="keyname">searching string, enter value which you want to find</param>
+        /// <returns>list of keys</returns>
         [HttpGet("searchkeys/")]
         public async Task<List<Key>> SearchKey(string keyname)
         {

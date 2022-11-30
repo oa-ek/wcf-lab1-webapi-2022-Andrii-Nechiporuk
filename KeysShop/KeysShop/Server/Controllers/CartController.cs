@@ -1,6 +1,7 @@
 ﻿using KeysShop.Core;
 using KeysShop.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace KeysShop.Server.Controllers
 {
@@ -15,7 +16,12 @@ namespace KeysShop.Server.Controllers
             this.keysRepository = keysRepository;
         }
 
+        /// <summary>
+        /// Method creates cart if in wasn`t initialized and adds key to it
+        /// </summary>
+        /// <param name="id">id of buying key</param>
         [HttpPost("buyitem/{id}")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
         public void Buy(int id)
         {
             if (HttpContext.Session.GetObject<List<CartItem>>("cart") == null)
