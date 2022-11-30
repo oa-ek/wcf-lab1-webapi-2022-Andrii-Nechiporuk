@@ -17,11 +17,17 @@ namespace KeysShop.Repository
             this._ctx = _ctx;
         }
 
-        public async Task<Brand> AddBrandAsync(BrandCreateDto brandDto)
+        public async Task<Brand> AddBrandByDtoAsync(BrandCreateDto brandDto)
         {
             var brand = new Brand();
             brand.Name = brandDto.Name;
             brand.Description = brandDto.Description;
+            _ctx.Brands.Add(brand);
+            await _ctx.SaveChangesAsync();
+            return _ctx.Brands.FirstOrDefault(x => x.Name == brand.Name);
+        }
+        public async Task<Brand> AddBrandAsync(Brand brand)
+        {
             _ctx.Brands.Add(brand);
             await _ctx.SaveChangesAsync();
             return _ctx.Brands.FirstOrDefault(x => x.Name == brand.Name);
@@ -34,6 +40,19 @@ namespace KeysShop.Repository
         public Brand GetBrandByName(string name)
         {
             return _ctx.Brands.FirstOrDefault(x => x.Name == name);
+        }
+        
+        public BrandCreateDto GetBrandDtoByName(string name)
+        {
+            var brand = _ctx.Brands.FirstOrDefault(x => x.Name == name);
+            var brandDto = new BrandCreateDto 
+            {
+                Name = brand.Name,
+                Description = brand.Description,
+                Id = brand.Id
+            };
+
+            return brandDto;
         }
 
         public List<Brand> GetBrands()
@@ -48,7 +67,7 @@ namespace KeysShop.Repository
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task UpdateBrandAsync(Brand updatedBrand)
+        public async Task UpdateBrandAsync(BrandCreateDto updatedBrand)
         {
             var brand = _ctx.Brands.FirstOrDefault(x => x.Id == updatedBrand.Id);
             brand.Description = updatedBrand.Description;

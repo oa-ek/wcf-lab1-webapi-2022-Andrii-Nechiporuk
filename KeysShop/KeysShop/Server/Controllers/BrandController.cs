@@ -15,50 +15,40 @@ namespace KeyShop.Server.Controllers
             _brandRepository = brandRepository;
         }
 
-        [HttpGet]
-        public List<Brand> Index()
+        [HttpGet("getbrands/")]
+        public List<Brand> GetBrands()
         {
             var brands = _brandRepository.GetBrands();
             return brands;
         }
-/*        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }*/
-        [HttpPost]
+        /*        [HttpGet]
+                public IActionResult Create()
+                {
+                    return View();
+                }*/
+        [HttpPost("createbrand/")]
         public async Task<Brand> Create(BrandCreateDto brandDto)
         {
-            var createdBrand = await _brandRepository.AddBrandAsync(brandDto);
+            var createdBrand = await _brandRepository.AddBrandByDtoAsync(brandDto);
             return createdBrand;
         }
-        /*[HttpGet]
-        public IActionResult Edit(int id)
+
+        [HttpGet("getbrand/")]
+        public Brand GetBrand(int id)
         {
-            return View(_brandRepository.GetBrand(id));
+            return _brandRepository.GetBrand(id);
         }
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Edit(Brand brand)
+
+        [HttpPost("updatebrand/")]
+        public async Task Edit(BrandCreateDto brand)
         {
-            if (ModelState.IsValid)
-            {
-                await _brandRepository.UpdateBrandAsync(brand);
-                return RedirectToAction("Index");
-            }
-            return View(brand);
+            await _brandRepository.UpdateBrandAsync(brand);
         }
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            return View(_brandRepository.GetBrand(id));
-        }
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Delete(Brand brand)
+
+        [HttpPost("deletebrand/")]
+        public async Task Delete(BrandCreateDto brand)
         {
             await _brandRepository.DeleteBrandAsync(brand.Id);
-            return RedirectToAction("Index");
-        }*/
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace KeysShop.Core
 {
@@ -13,21 +14,21 @@ namespace KeysShop.Core
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[BindNever]
+        [BindNever]
         public int Id { get; set; }
 
         [Display(Name = "Ім'я")]
-        [MinLength(3)]
-        [Required(ErrorMessage = "Довжина поля має бути більшою 3 символів")]
+        //[MinLength(3)]
+        //[Required(ErrorMessage = "Довжина поля має бути більшою 3 символів")]
         public string? Name { get; set; }
 
-        [MinLength(3)]
-        [Required(ErrorMessage = "Довжина поля має бути більшою 3 символів")]
+        //[MinLength(3)]
+        //[Required(ErrorMessage = "Довжина поля має бути більшою 3 символів")]
         [Display(Name = "Прізвище")]
         public string? Surname { get; set; }
 
-        [MinLength(10)]
-        [Required(ErrorMessage = "Довжина поля має бути не меншою 10 символів")]
+        //[MinLength(10)]
+        //[Required(ErrorMessage = "Довжина поля має бути не меншою 10 символів")]
         [Display(Name = "Адреса доставки")]
         public string? Adress { get; set; }
 
@@ -42,8 +43,8 @@ namespace KeysShop.Core
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
-        //[BindNever]
-        [ScaffoldColumn(false)]
+        [BindNever]
+        //[ScaffoldColumn(false)]
         public DateTime DateTime { get; set; }
 
         public List<OrderDetail>? OrderDetails { get; set; }
