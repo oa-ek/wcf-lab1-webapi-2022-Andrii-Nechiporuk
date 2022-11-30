@@ -1,6 +1,6 @@
 ﻿using KeysShop.Core;
 using KeysShop.Repository;
-using KeysShop.Repository.Dto;
+using KeysShop.Shared.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeyShop.Server.Controllers
@@ -20,7 +20,7 @@ namespace KeyShop.Server.Controllers
         /// </summary>
         /// <returns>array of brands</returns>
         [HttpGet("getbrands/")]
-        public List<Brand> GetBrands()
+        public List<BrandCreateDto> GetBrands()
         {
             var brands = _brandRepository.GetBrands();
             return brands;

@@ -1,5 +1,6 @@
-﻿using KeysShop.Core;
-using KeysShop.Repository.Dto;
+﻿using AutoMapper;
+using KeysShop.Core;
+using KeysShop.Shared.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,18 @@ namespace KeysShop.Repository
     public class BrandRepository
     {
         private readonly KeysShopContext _ctx;
+        private readonly IMapper _mapper;
 
-        public BrandRepository(KeysShopContext _ctx)
+        public BrandRepository(KeysShopContext _ctx, IMapper mapper)
         {
             this._ctx = _ctx;
+            _mapper = mapper;   
+        }
+
+        public List<BrandCreateDto> GetBrands()
+        {
+            var brandList = _ctx.Brands.ToList();
+            return _mapper.Map<List<BrandCreateDto>>(_ctx.Brands.ToList());
         }
 
         public async Task<Brand> AddBrandByDtoAsync(BrandCreateDto brandDto)
@@ -55,11 +64,7 @@ namespace KeysShop.Repository
             return brandDto;
         }
 
-        public List<Brand> GetBrands()
-        {
-            var brandList = _ctx.Brands.ToList();
-            return brandList;
-        }
+
 
         public async Task DeleteBrandAsync(int id)
         {

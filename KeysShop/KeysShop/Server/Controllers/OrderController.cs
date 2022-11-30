@@ -1,6 +1,6 @@
 ﻿using KeysShop.Core;
 using KeysShop.Repository;
-using KeysShop.Repository.Dto;
+using KeysShop.Shared.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeysShop.Server.Controllers

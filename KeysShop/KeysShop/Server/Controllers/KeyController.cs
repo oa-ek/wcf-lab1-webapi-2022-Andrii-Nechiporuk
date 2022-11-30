@@ -1,10 +1,10 @@
 ﻿using KeysShop.Core;
-using KeysShop.Repository.Dto;
 using KeysShop.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting;
 using Swashbuckle.AspNetCore.Annotations;
+using KeysShop.Shared.Dtos;
 
 namespace KeysShop.UI.Controllers
 {

@@ -1,5 +1,5 @@
 ﻿using KeysShop.Core;
-using KeysShop.Repository.Dto;
+using KeysShop.Shared.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

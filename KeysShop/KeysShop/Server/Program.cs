@@ -31,6 +31,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddAutoMapper(typeof(AppAutoMapper).Assembly);
 
 //builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
