@@ -20,9 +20,9 @@ namespace KeysShop.Server.Controllers
         /// Method creates cart if in wasn`t initialized and adds key to it
         /// </summary>
         /// <param name="id">id of buying key</param>
-        [HttpPost("buyitem/{id}")]
+        [HttpPut("{id}")]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public void Buy(int id)
+        public void Add(int id)
         {
             if (HttpContext.Session.GetObject<List<CartItem>>("cart") == null)
             {
@@ -46,7 +46,7 @@ namespace KeysShop.Server.Controllers
             }
         }
 
-        [NonAction]
+        [HttpDelete("{id}")]
         public void Remove(int id)
         {
             var cart = HttpContext.Session.GetObject<List<CartItem>>("cart");

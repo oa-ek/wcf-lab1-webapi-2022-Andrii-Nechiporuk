@@ -33,6 +33,8 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddAutoMapper(typeof(AppAutoMapper).Assembly);
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 //builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
 {

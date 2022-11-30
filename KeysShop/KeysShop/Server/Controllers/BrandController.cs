@@ -19,13 +19,24 @@ namespace KeyShop.Server.Controllers
         /// Method returns list of brands
         /// </summary>
         /// <returns>array of brands</returns>
-        [HttpGet("getbrands/")]
+        [HttpGet]
         public List<BrandCreateDto> GetBrands()
         {
             var brands = _brandRepository.GetBrands();
             return brands;
         }
 
+
+        /// <summary>
+        /// Method takes brand from db
+        /// </summary>
+        /// <param name="id">id of searching brand</param>
+        /// <returns>brand from db</returns>
+        [HttpGet("{id}")]
+        public Brand GetBrand(int id)
+        {
+            return _brandRepository.GetBrand(id);
+        }
 
         /*        [HttpGet]
                 public IActionResult Create()
@@ -37,7 +48,7 @@ namespace KeyShop.Server.Controllers
         /// Method creates brand and adds it to db
         /// </summary>
         /// <returns>created brand from db</returns>
-        [HttpPost("createbrand/")]
+        [HttpPost]
         public async Task<Brand> Create(BrandCreateDto brandDto)
         {
             var createdBrand = await _brandRepository.AddBrandByDtoAsync(brandDto);
@@ -45,20 +56,9 @@ namespace KeyShop.Server.Controllers
         }
 
         /// <summary>
-        /// Method takes brand from db
-        /// </summary>
-        /// <param name="id">id of searching brand</param>
-        /// <returns>brand from db</returns>
-        [HttpGet("getbrand/{id}")]
-        public Brand GetBrand(int id)
-        {
-            return _brandRepository.GetBrand(id);
-        }
-
-        /// <summary>
         /// Method updates brand in db
         /// </summary>
-        [HttpPost("updatebrand/")]
+        [HttpPut]
         public async Task Edit(BrandCreateDto brand)
         {
             await _brandRepository.UpdateBrandAsync(brand);
@@ -67,10 +67,10 @@ namespace KeyShop.Server.Controllers
         /// <summary>
         /// Method deletes brand 
         /// </summary>
-        [HttpPost("deletebrand/")]
-        public async Task Delete(BrandCreateDto brand)
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
         {
-            await _brandRepository.DeleteBrandAsync(brand.Id);
+            await _brandRepository.DeleteBrandAsync(id);
         }
     }
 }
