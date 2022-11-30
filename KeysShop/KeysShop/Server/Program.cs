@@ -73,6 +73,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
 
 app.MapRazorPages();
 app.MapControllers();

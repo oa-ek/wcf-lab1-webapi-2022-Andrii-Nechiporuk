@@ -15,7 +15,7 @@ namespace KeysShop.Server.Controllers
             this.keysRepository = keysRepository;
         }
 
-        [NonAction]
+        [HttpPost("buyitem/{id}")]
         public void Buy(int id)
         {
             if (HttpContext.Session.GetObject<List<CartItem>>("cart") == null)

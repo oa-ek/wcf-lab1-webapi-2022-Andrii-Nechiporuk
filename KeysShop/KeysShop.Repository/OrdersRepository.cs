@@ -1,4 +1,5 @@
 ﻿using KeysShop.Core;
+using KeysShop.Repository.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,17 @@ namespace KeysShop.Repository
             this.sessionManager = sessionManager;
         }
 
-        public void createOrder(Order order)
+        public void createOrder(OrderDto orderDto)
         {
+            var order = new Order
+            {
+                Surname = orderDto.Surname,
+                Name = orderDto.Name,
+                Email = orderDto.Email,
+                Phone = orderDto.Phone,
+                Delivery = orderDto.Delivery,
+                Adress = orderDto.Adress
+            };
             order.DateTime = DateTime.Now;
             _context.Orders.Add(order);
             _context.SaveChanges();
