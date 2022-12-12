@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace KeyShop.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BrandController : ControllerBase
     {
         private readonly BrandRepository _brandRepository;

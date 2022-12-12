@@ -1,5 +1,8 @@
+using Blazored.LocalStorage;
+using KeysShop.Client;
 using KeysShop.Core;
 using KeysShop.Repository;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -26,6 +29,8 @@ builder.Services.AddScoped<KeysRepository>();
 builder.Services.AddScoped<BrandRepository>();
 builder.Services.AddScoped<OrdersRepository>();
 builder.Services.AddScoped<SessionManager>();
+
+
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

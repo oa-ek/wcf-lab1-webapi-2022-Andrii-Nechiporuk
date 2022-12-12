@@ -9,7 +9,7 @@ using KeysShop.Shared.Dtos;
 namespace KeysShop.UI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class KeyController : ControllerBase
     {
         private readonly KeysRepository keysRepository;
@@ -27,7 +27,7 @@ namespace KeysShop.UI.Controllers
         /// Method returnes list of keys from database
         /// </summary>
         /// 
-        [HttpGet("getkeys/")]
+        [HttpGet]
         public List<Key> GetKeys()
         {
             var keys = keysRepository.GetKeys();
@@ -39,7 +39,7 @@ namespace KeysShop.UI.Controllers
         /// </summary>
         /// <param name="id">id of searching key</param>
         /// <returns>key from db</returns>
-        [HttpGet("getkey/{id}")]
+        [HttpGet("{id}")]
         public Key GetBrand(int id)
         {
             return keysRepository.GetKey(id);
@@ -49,7 +49,7 @@ namespace KeysShop.UI.Controllers
         /// Method creates key and adds it to db
         /// </summary>
         /// <param name="brands">gives the name of brand, which we need to create key</param>
-        [HttpPost("createkey/")]
+        [HttpPost]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
         [SwaggerResponse(StatusCodes.Status409Conflict)]
         [SwaggerResponse(StatusCodes.Status500InternalServerError)]
@@ -110,7 +110,7 @@ namespace KeysShop.UI.Controllers
         /// Method edits key from database
         /// </summary>
         /// <param name="brands">name of brand, which we wanna edit</param>
-        [HttpPost("editkey/")]
+        [HttpPut]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
         [SwaggerResponse(StatusCodes.Status409Conflict)]
         [SwaggerResponse(StatusCodes.Status500InternalServerError)]
@@ -123,7 +123,7 @@ namespace KeysShop.UI.Controllers
         /// Method deletes key from database by id
         /// </summary>
         /// <param name="id">id of deleting key</param>
-        [HttpPost("confirmdelete/{id}")]
+        [HttpDelete("{id}")]
         public async Task ConfirmDelete(int id)
         {
             await keysRepository.DeleteKeyAsync(id);
