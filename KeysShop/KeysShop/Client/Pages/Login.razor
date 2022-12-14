@@ -19,9 +19,18 @@
 
 	async Task HandleLogin()
 	{
-		var result = await Http.PostAsJsonAsync("api/auth", user);
+		var result = await Http.PostAsJsonAsync("api/auth/login", user);
 		var token = await result.Content.ReadAsStringAsync();
-		Console.WriteLine(token);
+		/*if (result.IsError)
+        {
+            ServerError = response.Title;
+        }
+        else
+        {
+            await LocalStorage.SetItemAsync<string>("token", response.Value.Token);
+            await AuthentificationStateProvider.GetAuthenticationStateAsync();
+            Navigation.NavigateTo("/");
+        }*/
 		await LocalStorage.SetItemAsync("token", token);
 		await AuthStateProvider.GetAuthenticationStateAsync();
 	}

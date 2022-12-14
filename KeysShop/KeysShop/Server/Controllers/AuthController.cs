@@ -45,8 +45,6 @@ namespace KeysShop.Server.Controllers
                 return BadRequest("Неправильний пароль");
             }
             string token = CreateToken(user);
-/*            await _localStorage.SetItemAsync("token", token);
-            await _authStateProvider.GetAuthenticationStateAsync();*/
             return token;
         }
 
