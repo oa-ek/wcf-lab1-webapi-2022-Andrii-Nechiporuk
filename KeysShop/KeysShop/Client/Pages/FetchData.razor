@@ -1,6 +1,7 @@
 ﻿@page "/fetchdata"
 @using KeysShop.Shared
 @inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider;
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -10,7 +11,7 @@
 
 @if (forecasts == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Сталася помилка</em></p>
 }
 else
 {

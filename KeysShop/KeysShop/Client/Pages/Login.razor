@@ -2,6 +2,8 @@
 @inject HttpClient Http
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
+
 
 <h3>Login</h3>
 
@@ -21,17 +23,12 @@
 	{
 		var result = await Http.PostAsJsonAsync("api/auth/login", user);
 		var token = await result.Content.ReadAsStringAsync();
-		/*if (result.IsError)
+		if (result.IsSuccessStatusCode)
         {
-            ServerError = response.Title;
+			await LocalStorage.SetItemAsync("token", token);
+			await AuthStateProvider.GetAuthenticationStateAsync();
+			Navigation.NavigateTo("/");
         }
-        else
-        {
-            await LocalStorage.SetItemAsync<string>("token", response.Value.Token);
-            await AuthentificationStateProvider.GetAuthenticationStateAsync();
-            Navigation.NavigateTo("/");
-        }*/
-		await LocalStorage.SetItemAsync("token", token);
-		await AuthStateProvider.GetAuthenticationStateAsync();
+
 	}
 }

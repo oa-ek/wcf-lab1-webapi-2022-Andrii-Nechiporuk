@@ -18,19 +18,21 @@ namespace KeysShop.Server.Controllers
     {
         public static User user = new User();
 
-/*        public IConfiguration _configuration { get; }
-        public AuthenticationStateProvider _authStateProvider { get; set; }
-        public ILocalStorageService _localStorage { get; set; }
-        public AuthController(IConfiguration configuration, AuthenticationStateProvider authenticationState, ILocalStorageService localStorage)
-        {
-            _configuration = configuration;
-            _authStateProvider = authenticationState;
-            _localStorage = localStorage;
-        }*/
+        /*        public IConfiguration _configuration { get; }
+                public AuthenticationStateProvider _authStateProvider { get; set; }
+                public ILocalStorageService _localStorage { get; set; }
+                public AuthController(IConfiguration configuration, AuthenticationStateProvider authenticationState, ILocalStorageService localStorage)
+                {
+                    _configuration = configuration;
+                    _authStateProvider = authenticationState;
+                    _localStorage = localStorage;
+                }*/
+        public ILocalStorageService _localStorage { get; }
         public IConfiguration _configuration { get; }
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, ILocalStorageService localStorage)
         {
             _configuration = configuration;
+            _localStorage = localStorage;
         }
 
         [HttpPost("login")]
@@ -45,7 +47,53 @@ namespace KeysShop.Server.Controllers
                 return BadRequest("Неправильний пароль");
             }
             string token = CreateToken(user);
+            var refreshToken = GenerateRefreshToken();
+            SetRefreshToken(refreshToken);
             return token;
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<string>> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            if (user.RefreshToken != refreshToken)
+            {
+                return Unauthorized("Invalid refresh token");
+            }
+            else if (user.TokenExpires <= DateTime.Now)
+            {
+                return Unauthorized("Token expired");
+            }
+
+            string token = CreateToken(user);
+            var newRefreshToken = GenerateRefreshToken();
+            SetRefreshToken(newRefreshToken);
+            return Ok(token);
+        }
+
+        private void SetRefreshToken(RefreshToken newRefreshToken)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = newRefreshToken.Expires,
+            };
+            Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
+            user.RefreshToken = newRefreshToken.Token;
+            user.TokenCreated = newRefreshToken.Created;
+            user.TokenExpires = newRefreshToken.Expires;
+        }
+
+        private RefreshToken GenerateRefreshToken()
+        {
+            var refreshToken = new RefreshToken
+            {
+                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                Expires = DateTime.Now.AddHours(7),
+                Created = DateTime.Now
+            };
+
+            return refreshToken;
         }
 
         private string CreateToken(User user)
@@ -60,7 +108,7 @@ namespace KeysShop.Server.Controllers
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddSeconds(3600),
                 signingCredentials: creds);
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);

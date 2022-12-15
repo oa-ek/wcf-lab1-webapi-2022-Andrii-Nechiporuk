@@ -33,7 +33,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
             .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
             ValidateIssuer = false,
-            ValidateAudience = false
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
         };
     });
 
@@ -45,7 +47,7 @@ builder.Services.AddScoped<KeysRepository>();
 builder.Services.AddScoped<BrandRepository>();
 builder.Services.AddScoped<OrdersRepository>();
 builder.Services.AddScoped<SessionManager>();
-
+builder.Services.AddBlazoredLocalStorage();
 
 
 builder.Services.AddControllers().AddJsonOptions(x =>

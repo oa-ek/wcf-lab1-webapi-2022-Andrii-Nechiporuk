@@ -20,7 +20,7 @@ namespace KeysShop.Server.Controllers
             _logger = logger;
         }
 
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet, Authorize(Roles = "common")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

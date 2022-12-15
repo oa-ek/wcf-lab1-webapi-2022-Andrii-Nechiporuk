@@ -1,4 +1,5 @@
 ﻿
+using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
@@ -17,6 +18,7 @@ namespace KeysShop.Client
         }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
+            
             string token = await _localStorage.GetItemAsStringAsync("token");
 
             var identity = new ClaimsIdentity();
