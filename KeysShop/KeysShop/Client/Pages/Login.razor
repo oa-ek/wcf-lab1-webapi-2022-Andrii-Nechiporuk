@@ -7,28 +7,62 @@
 
 <h3>Login</h3>
 
-<EditForm Model="user" OnSubmit="HandleLogin">
-	<label for="username">Name</label>
-	<InputText id="username" @bind-Value="user.UserName"/>
-	<label for="password">Password</label>
-	<InputText id="password" @bind-Value="user.Password" type="password"/>
-	<button type="submit" class="btn btn-success">Залогінитись</button>
-</EditForm>
+<SfCard>
+	<CardContent>
+
+	<EditForm Model="user" OnSubmit="HandleLogin">
+ <DataAnnotationsValidator />
+ <div>
+		<div class="row">
+			<div class="col-12">
+				<ValidationMessage For="() => user.UserName" />
+				<label for="username">Name</label>
+				<InputText id="username" @bind-Value="user.UserName"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+								<ValidationMessage For="() => user.Password" />
+				<label for="password">Password</label>
+				<InputText id="password" @bind-Value="user.Password" type="password"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+			<button type="submit" class="btn btn-success">Залогінитись</button>
+			</div>
+		</div>
+
+		<div class="text-danger">@Error</div>
+ </div>
+
+	</EditForm>
+	</CardContent>
+</SfCard>
+
 
 
 @code {
+
 	UserLoginDto user = new UserLoginDto();
+
+	string Error = "";
 
 	async Task HandleLogin()
 	{
 		var result = await Http.PostAsJsonAsync("api/auth/login", user);
 		var token = await result.Content.ReadAsStringAsync();
+
 		if (result.IsSuccessStatusCode)
-        {
+		{
 			await LocalStorage.SetItemAsync("token", token);
 			await AuthStateProvider.GetAuthenticationStateAsync();
 			Navigation.NavigateTo("/");
-        }
+		}
+		else
+		{
+			Error = "Користувача не знайдено";
+		}
 
 	}
 }

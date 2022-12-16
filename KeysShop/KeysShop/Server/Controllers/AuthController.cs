@@ -109,7 +109,8 @@ namespace KeysShop.Server.Controllers
             var token = new JwtSecurityToken(
                 claims: claims,
                 expires: DateTime.Now.AddSeconds(3600),
-                signingCredentials: creds);
+                signingCredentials: creds
+                );
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
