@@ -9,6 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeysShop.Server", "KeysShop
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeysShop.Client", "KeysShop\Client\KeysShop.Client.csproj", "{5046FD95-6DBB-4C54-8F88-780AF82FB747}"
+	ProjectSection(ProjectDependencies) = postProject
+		{391B29CF-D6E4-4DBC-A11B-4011F069C7C9} = {391B29CF-D6E4-4DBC-A11B-4011F069C7C9}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeysShop.Shared", "KeysShop\Shared\KeysShop.Shared.csproj", "{2C81599B-D7FE-4C9F-B8F2-28B56DC14718}"
 EndProject

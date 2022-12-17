@@ -1,0 +1,39 @@
+﻿@page "/key/index"
+@inject HttpClient Http
+
+<div class="">
+    <a class="btn btn-success" href="/create">Додати товар</a>
+</div>
+<br />
+<tbody>
+        <div class="container row">
+        @foreach (var item in keys)
+        {
+                            <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                              <img class="card-img-top" src="@item.ImgPath" alt="@item.Name">
+                              <div class="card-body">
+                                 <h5 class="card-title">@item.Name</h5>
+                                 <p class="card-text">Бренд: @item.Brand</p>
+                                 <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+
+                                                    <a class="btn btn-sm btn-outline-secondary" href="/edit/@item.Id" >Редагувати</a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/details/@item.Id" asp-route-id="@item.Id">Деталі</a>
+                                                    <a class="btn btn-sm btn-outline-secondary" href="/delete/@item.Id" asp-route-id="@item.Id">Видалити</a>
+                                    </div>
+                                 </div>
+                              </div>
+                            </div>
+                            </div>
+        }
+        </div>
+</tbody>
+
+@code {
+	List<KeyCreateDto> keys = new List<KeyCreateDto>();
+	protected override async Task OnInitializedAsync()
+	{
+		keys = await Http.GetFromJsonAsync<List<KeyCreateDto>>("api/key");
+	}
+}

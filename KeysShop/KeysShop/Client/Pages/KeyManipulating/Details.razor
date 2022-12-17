@@ -1,0 +1,129 @@
+﻿@page "/details/{id:int}"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using KeysShop.Client.Pages.SuccessPages
+@using KeysShop.Shared;
+
+
+<h3>@key.Name</h3>
+<hr />
+	<EditForm Model="key" OnValidSubmit="EditKey">
+ <DataAnnotationsValidator />
+ <div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => key.Name" />
+					<label for="name">Name</label>
+				</div>
+				<div class="col-12">
+					<InputText id="name" @bind-Value="key.Name"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => key.Description" />
+					<label for="description">Description</label>
+				</div>
+				<div class="col-12">
+					<InputText id="description" @bind-Value="key.Description"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => key.Price" />
+					<label for="price">Price</label>
+				</div>
+				<div class="col-12">
+					<InputNumber id="price" @bind-Value="key.Price"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => key.Sale" />
+					<label for="description">Sale</label>
+				</div>
+				<div class="col-12">
+					<InputNumber id="sale" @bind-Value="key.Sale"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => key.Frequency" />
+					<label for="description">Frequency</label>
+				</div>
+				<div class="col-12">
+					<InputNumber id="frequency" @bind-Value="key.Frequency"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => key.Count" />
+					<label for="description">Count</label>
+				</div>
+				<div class="col-12">
+					<InputText id="count" @bind-Value="key.Count"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => key.ImgPath" />
+					<label for="imgpath">ImagePath</label>
+				</div>
+				<div class="col-12">
+					<InputText id="imgpath" @bind-Value="key.ImgPath"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<label for="description">IsOriginal</label>
+				</div>
+				<div class="col-12">
+					<InputCheckbox id="isoriginal" @bind-Value="key.IsOriginal"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<label for="iskeyless">IsKeyless</label>
+				</div>
+				<div class="col-12">
+					<InputCheckbox id="isoriginal" @bind-Value="key.IsKeyless"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => key.Brand" />
+					<label for="isoriginal">Brand</label>
+				</div>
+				<div class="col-12">
+					<InputSelect id="brands" @bind-Value="key.Brand">
+					@foreach (var b in brands)
+					{
+								<option value="@b.Name">@b.Name</option>
+					}
+					</InputSelect>
+				</div>
+			</div>
+			<div class="col-12">
+			<button type="submit" class="btn btn-success">Відредагувати</button>
+			</div>
+	</div>
+	</EditForm>
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+
+	KeyCreateDto key = new KeyCreateDto();
+
+	List<BrandCreateDto> brands = new List<BrandCreateDto>();
+	protected override async Task OnInitializedAsync()
+	{
+		key = await Http.GetFromJsonAsync<KeyCreateDto>($"api/key/{Id}");
+		brands = await Http.GetFromJsonAsync<List<BrandCreateDto>>("api/brand");
+	}
+	public async Task EditKey()
+	{
+
+	}
+
+}

@@ -3,6 +3,7 @@ global using Blazored.LocalStorage;
 using KeysShop.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Blazored.Modal;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -12,5 +13,5 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddBlazoredLocalStorage();
-
+builder.Services.AddBlazoredModal();
 await builder.Build().RunAsync();

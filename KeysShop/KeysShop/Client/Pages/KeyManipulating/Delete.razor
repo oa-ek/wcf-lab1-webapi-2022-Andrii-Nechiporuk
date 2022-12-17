@@ -1,0 +1,28 @@
+﻿@page "/delete/{id:int}"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+@using KeysShop.Shared;
+
+
+<h3>Ви точно хочете видалити цей ключ?(Id=@Id)</h3>
+<hr />
+	<EditForm Model="Id" OnSubmit="DeleteKey">
+			<div class="col-12">
+			<button type="submit" class="btn btn-success">Остаточно видалити</button>
+			</div>
+	</EditForm>
+@code {
+	[Parameter]
+	public int Id { get; set; }
+
+	public async Task DeleteKey()
+	{
+		var result = await Http.DeleteAsync($"api/key/{Id}");
+		if (result.IsSuccessStatusCode)
+		{
+			Navigation.NavigateTo("/");
+		}
+	}
+
+}

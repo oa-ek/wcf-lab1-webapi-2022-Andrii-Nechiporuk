@@ -10,7 +10,7 @@
 <SfCard>
 	<CardContent>
 
-	<EditForm Model="user" OnSubmit="HandleLogin">
+	<EditForm Model="user" OnValidSubmit="HandleLogin">
  <DataAnnotationsValidator />
  <div>
 		<div class="row">
@@ -43,13 +43,14 @@
 
 
 @code {
-
+	
 	UserLoginDto user = new UserLoginDto();
 
 	string Error = "";
 
 	async Task HandleLogin()
 	{
+		
 		var result = await Http.PostAsJsonAsync("api/auth/login", user);
 		var token = await result.Content.ReadAsStringAsync();
 

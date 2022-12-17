@@ -28,9 +28,9 @@ namespace KeysShop.UI.Controllers
         /// </summary>
         /// 
         [HttpGet]
-        public List<Key> GetKeys()
+        public List<KeyCreateDto> GetKeys()
         {
-            var keys = keysRepository.GetKeys();
+            var keys = keysRepository.GetKeysDto();
             return keys;
         }
 
@@ -40,9 +40,24 @@ namespace KeysShop.UI.Controllers
         /// <param name="id">id of searching key</param>
         /// <returns>key from db</returns>
         [HttpGet("{id}")]
-        public Key GetBrand(int id)
+        public KeyCreateDto GetKey(int id)
         {
-            return keysRepository.GetKey(id);
+            var key = keysRepository.GetKey(id);
+            var keyDto = new KeyCreateDto 
+            {
+                Id = key.Id,
+                Name = key.Name,
+                Description = key.Description,
+                Price = key.Price,
+                Sale = key.Sale,
+                Frequency = key.Frequency,
+                Count = key.Count,
+                ImgPath = key.ImgPath,
+                IsOriginal = key.IsOriginal,
+                IsKeyless = key.IsKeyless,
+                Brand = key.Brand.Name
+            };
+            return keyDto;
         }
 
         /// <summary>
@@ -53,12 +68,12 @@ namespace KeysShop.UI.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
         [SwaggerResponse(StatusCodes.Status409Conflict)]
         [SwaggerResponse(StatusCodes.Status500InternalServerError)]
-        public async Task CreateKey(KeyCreateDto keyCreateDto, string brands)
+        public async Task<KeyCreateDto> CreateKey(KeyCreateDto keyCreateDto)
         {
-            var brand = brandsRepository.GetBrandByName(brands);
+            var brand = brandsRepository.GetBrandByName(keyCreateDto.Brand);
             if (brand == null)
             {
-                brand = new Brand() { Name = brands };
+                brand = new Brand() { Name = keyCreateDto.Brand };
                 brand = await brandsRepository.AddBrandAsync(brand);
             }
 
@@ -75,6 +90,7 @@ namespace KeysShop.UI.Controllers
                 IsKeyless = keyCreateDto.IsKeyless,
                 Brand = brand
             });
+            return key;
         }
 
         /*        [HttpGet("getimage/{id}")]
@@ -114,9 +130,9 @@ namespace KeysShop.UI.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
         [SwaggerResponse(StatusCodes.Status409Conflict)]
         [SwaggerResponse(StatusCodes.Status500InternalServerError)]
-        public async Task Edit(KeyCreateDto model, string brands)
+        public async Task Edit(KeyCreateDto model)
         {
-            await keysRepository.UpdateAsync(model, brands);
+            await keysRepository.UpdateAsync(model);
         }
 
         /// <summary>
