@@ -144,5 +144,11 @@ namespace KeysShop.UI.Controllers
         {
             await keysRepository.DeleteKeyAsync(id);
         }
+
+        [HttpGet("search/{searchText}")]
+        public ActionResult<List<KeyCreateDto>> SearchKeys(string searchText)
+        {
+            return Ok(keysRepository.SearchKey(searchText));
+        }
     }
 }

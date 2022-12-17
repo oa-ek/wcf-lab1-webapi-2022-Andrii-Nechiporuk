@@ -1,0 +1,36 @@
+﻿@inject HttpClient Http
+@inject NavigationManager Navigation
+
+        <BlazoredTypeahead SearchMethod="@SearchKey" 
+                            TValue="KeyCreateDto"
+                            TItem="KeyCreateDto"
+                            Value="selectedKey"
+                            ValueChanged="HandleSearch"
+                            ValueExpression="@(()=>selectedKey)">
+            <SelectedTemplate>
+                @context.Name
+            </SelectedTemplate>
+            <ResultTemplate>
+                @context.Name
+            </ResultTemplate>
+            <NotFoundTemplate>
+                Вибачте, не вдалося нічого знайти :(
+            </NotFoundTemplate>
+        </BlazoredTypeahead>
+
+@code {
+    private KeyCreateDto selectedKey;
+
+    private async Task<IEnumerable<KeyCreateDto>> SearchKey(string searchText)
+    {
+        var response = await Http.GetFromJsonAsync<List<KeyCreateDto>>($"api/key/search/{searchText}");
+        return response;
+    }
+
+    private void HandleSearch(KeyCreateDto key)
+    {
+        if (key == null) return;
+        selectedKey = key;
+        Navigation.NavigateTo($"/details/{selectedKey.Id}");
+    }
+}

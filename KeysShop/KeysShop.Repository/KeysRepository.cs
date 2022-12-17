@@ -3,7 +3,9 @@ using KeysShop.Shared.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -141,6 +143,14 @@ namespace KeysShop.Repository
             if (key.Brand.Name != model.Brand)
                 key.Brand = _ctx.Brands.FirstOrDefault(x => x.Name == model.Brand);
             _ctx.SaveChanges();
+        }
+        public List<KeyCreateDto> SearchKey(string searchText)
+        {
+            return GetKeysDto().
+                Where(x => x.Name.ToLower().Contains(searchText.ToLower())
+                || x.Description.ToLower().Contains(searchText.ToLower())
+                || x.Frequency.ToString().Contains(searchText.ToLower())
+                || x.Brand.ToLower().Contains(searchText.ToLower())).ToList();
         }
     }
 }

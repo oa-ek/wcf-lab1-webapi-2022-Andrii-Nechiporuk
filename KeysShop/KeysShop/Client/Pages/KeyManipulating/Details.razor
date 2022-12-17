@@ -110,13 +110,15 @@
 	</EditForm>
 
 @code {
-	[Parameter]
-	public int Id { get; set; }
+
 
 	KeyCreateDto key = new KeyCreateDto();
 
+	[Parameter]
+	public int Id { get; set; }
+
 	List<BrandCreateDto> brands = new List<BrandCreateDto>();
-	protected override async Task OnInitializedAsync()
+	protected override async Task OnParametersSetAsync()
 	{
 		key = await Http.GetFromJsonAsync<KeyCreateDto>($"api/key/{Id}");
 		brands = await Http.GetFromJsonAsync<List<BrandCreateDto>>("api/brand");
